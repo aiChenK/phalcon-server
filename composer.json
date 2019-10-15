@@ -1,0 +1,14 @@
+{
+    "name": "aichenk/phalcon-server",
+    "description": "以phalcon框架作为服务代码模板，支持restful，包含api模块及cli模块，controller仅作预留",
+    "type": "project",
+    "authors": [
+        {
+            "name": "aiChenK",
+            "email": "aichenk@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2"
+    }
+}
