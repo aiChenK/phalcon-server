@@ -5,39 +5,19 @@ namespace app\helpers;
 use Phalcon\Di;
 use app\helpers\Exception\MethodException;
 
+/**
+ * Class BaseApi
+ * @package app\helpers
+ * @property \Phalcon\Db\Adapter $db
+ * @property \Phalcon\Http\Request $request
+ * @property \Phalcon\Http\Response $response
+ * @property \Phalcon\Mvc\Dispatcher $dispatcher
+ */
 class BaseApi
 {
-
-    /**
-     * @var \Phalcon\Db\Adapter
-     */
-    public $db;
-
-    /**
-     * @var \Phalcon\Http\Request
-     */
-    public $request;
-
-    /**
-     * @var \Phalcon\Http\Response
-     */
-    public $response;
-
-    /**
-     * @var \Phalcon\Mvc\Dispatcher
-     */
-    public $dispatcher;
-
-    /**
-     * 初始化服务
-     */
-    public function __construct()
+    public function __get($name)
     {
-        $di = Di::getDefault();
-        $this->db         = $di->get('db');
-        $this->request    = $di->get('request');
-        $this->response   = $di->get('response');
-        $this->dispatcher = $di->get('dispatcher');
+        return Di::getDefault()->get($name);
     }
 
     public function json($data = null)

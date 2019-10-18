@@ -7,7 +7,6 @@
 - PHP 7.2+
 - composer
 
-
 ## 使用
 - 下载完成后需运行 `composer install`
 - 修改web.ini文件中配置，配置可以从$di中获取
@@ -17,3 +16,7 @@
 ## 验证
 - 网页访问：`curl http://xxxx/api/v1/test`
 - 命令行(项目根目录)：`php run`
+
+## 更新
+2019-10-18
+- 更改BaseApi获取依赖注入方式
