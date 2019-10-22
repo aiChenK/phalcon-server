@@ -68,13 +68,9 @@ function exception_handler($exception)
         $_detail = $exception->getDescription();
     }
 
-    if (Di::get()->db->isUnderTransaction()) {
-        Di::get()->db->rollback();
-    }
-
     ob_clean();
     $controller = new BaseController();
-    header('HTTP/1.0 ' . ($exception->getCode() ?: 500));
+    header('HTTP/1.0 ' . $_code);
     header('Content-Type: application/json');
     echo $controller->error(
         $_code,
