@@ -2,24 +2,11 @@
 
 namespace app\helpers;
 
-use Phalcon\Di;
+use Phalcon\Di\Injectable;
 use app\helpers\Exception\MethodException;
 
-/**
- * Class BaseApi
- * @package app\helpers
- * @property \Phalcon\Db\Adapter $db
- * @property \Phalcon\Http\Request $request
- * @property \Phalcon\Http\Response $response
- * @property \Phalcon\Mvc\Dispatcher $dispatcher
- */
-class BaseApi
+class BaseApi extends Injectable
 {
-    public function __get($name)
-    {
-        return Di::getDefault()->get($name);
-    }
-
     public function json($data = null)
     {
         return $this->response->setJsonContent($data, JSON_UNESCAPED_UNICODE);

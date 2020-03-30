@@ -2,6 +2,8 @@
 
 namespace app\helpers;
 
+use Phalcon\Http\Response;
+use Phalcon\Http\ResponseInterface;
 use Phalcon\Mvc\Controller as PhalconController;
 
 class BaseController extends PhalconController
@@ -14,7 +16,7 @@ class BaseController extends PhalconController
      * @param string $msg
      * @param string $description
      * @param array $errors
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     * @return Response|ResponseInterface
      *
      * create by ck 20190725
      * modify by ck 20190806
@@ -30,7 +32,7 @@ class BaseController extends PhalconController
      *
      * @param string $msg
      * @param int $code
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     * @return Response|ResponseInterface
      *
      * create by ck 20190725
      * modify by ck 20190806
@@ -46,7 +48,7 @@ class BaseController extends PhalconController
      * 返回成功json消息
      *
      * @param array $data
-     * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
+     * @return Response|ResponseInterface
      *
      * create by ck 20190725
      * modify by ck 20190806
