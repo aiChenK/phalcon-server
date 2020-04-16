@@ -5,7 +5,7 @@
  * Date: 2019-01-03
  * Time: 15:30
  */
-namespace app\helpers;
+namespace app\common\helpers;
 
 use Phalcon\Di\Injectable;
 
@@ -26,9 +26,6 @@ class Di
 
 }
 
-/**
- * @property \Redis $redis
- */
 class DiInjectable extends Injectable
 {
 

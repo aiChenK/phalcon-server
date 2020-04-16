@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\helpers\BaseController;
+use app\common\helpers\BaseController;
 
 /**
  * Class Base

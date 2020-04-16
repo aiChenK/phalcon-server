@@ -8,7 +8,7 @@
 
 namespace app\api;
 
-use app\helpers\BaseApi;
+use app\common\helpers\BaseApi;
 
 class Base extends BaseApi
 {

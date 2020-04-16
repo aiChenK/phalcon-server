@@ -5,7 +5,6 @@ use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use app\helpers\Logger;
 
 /**
  * The URL component is used to generate all kind of urls in the application
@@ -55,7 +54,7 @@ $di->setShared('view', function () {
  */
 $di->setShared('dispatcher', function () use ($di) {
     $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('app\controllers');
+    $dispatcher->setDefaultNamespace('app\\controllers');
 
     $evManager = $di->getShared('eventsManager');
     $evManager->attach(
@@ -64,12 +63,10 @@ $di->setShared('dispatcher', function () use ($di) {
             switch ($exception->getCode()) {
                 case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
                 case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
-                    $dispatcher->forward(
-                        array(
-                            'controller' => 'index',
-                            'action' => 'notFound',
-                        )
-                    );
+                    $dispatcher->forward([
+                        'controller' => 'index',
+                        'action' => 'notFound',
+                    ]);
                     return false;
             }
             return true;

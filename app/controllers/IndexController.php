@@ -2,11 +2,8 @@
 
 namespace app\controllers;
 
-use app\helpers\Exception\MethodException;
-
 class IndexController extends Base
 {
-
     public function indexAction()
     {
         echo 'phalcon-server';
@@ -14,7 +11,7 @@ class IndexController extends Base
 
     public function notFoundAction()
     {
-        throw new MethodException();
+        return $this->error(404, '请求错误：暂不支持该接口');
     }
 
     public function aliveAction()
@@ -25,6 +22,4 @@ class IndexController extends Base
             'detail' => []
         ]);
     }
-
 }
-

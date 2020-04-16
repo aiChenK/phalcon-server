@@ -6,16 +6,16 @@
  * Time: 10:31
  */
 
-namespace app\api\v1;
+namespace app\api\v1\index;
 
 use app\api\Base;
 
-class Test extends Base
+class Index extends Base
 {
 
     public function index()
     {
-        return $this->success('Congratulations!');
+        return $this->success('Congratulations!  - ' . $this->apiRouter->getRequestPath());
     }
 
     public function indexPost()

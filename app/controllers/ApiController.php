@@ -2,45 +2,73 @@
 
 namespace app\controllers;
 
-use app\helpers\Tool;
-use app\helpers\Exception\MethodException;
-
 class ApiController extends Base
 {
+    /**
+     * 处理路由
+     *
+     * @param $version
+     * @param $module
+     * @param $submodule
+     * @param $action
+     * @param $params
+     * @return string
+     *
+     * create by aiChenK 20200416
+     */
+    private function _router($version, &$module, &$submodule, &$action, &$params)
+    {
+        //包含模块
+        $className = "\\app\\api\\v{$version}\\{$module}\\{$submodule}";
+        if (class_exists($className)) {
+            return $className;
+        }
+
+        //不包含模块
+        array_unshift($params, $action);
+        $action    = lcfirst($submodule);
+        $submodule = ucfirst($module);
+        $module    = '';
+        $className = "\\app\\api\\v{$version}\\{$submodule}";
+        if (class_exists($className)) {
+            return $className;
+        }
+        return $this->error(404, '请求错误：暂不支持该接口');
+    }
 
     /**
      * 执行api调用
      *
      * @return mixed
-     * @throws MethodException
      *
-     * create by ck 20190917
+     * create by aiChenK 20190917
+     * modify by aiChenK 20200415   增加调用_initialize方法，去除Tool依赖
      */
     public function indexAction()
     {
         $params  = $this->dispatcher->getParams();
         $version = $params['version'];
-        $module  = Tool::getValue($params, 0, '', function ($val) {
-            return ucfirst($val);
-        });
-        $function= Tool::getValue($params, 1, 'index');
-        unset($params['version'], $params[0], $params[1]);
+        unset($params['version']);
 
+        //模块预处理
+        $module    = $params[0] ?? 'index';
+        $submodule = ucfirst($params[1] ?? 'index');
+        $action    = $params[2] ?? 'index';
+        unset($params[0], $params[1], $params[2]);
         $params = array_values($params);
-        $className = "\\app\\api\\v{$version}\\{$module}";
-        //todo 检查className是否为文件夹，是则添加下一级params
-        $realMethod = $function . ucfirst(strtolower($this->request->getMethod()));
-        if (!class_exists($className)) {
-            throw new MethodException();
-        }
-        if (method_exists($className, $realMethod)) {
-            return call_user_func_array([new $className(), $realMethod], $params);
-        } elseif (method_exists($className, $function)) {
-            return call_user_func_array([new $className(), $function], $params);
+
+        //执行方法
+        $className  = $this->_router($version, $module, $submodule, $action, $params);
+        $restAction = $action . ucfirst(strtolower($this->request->getMethod()));
+        $class      = new $className();
+        call_user_func_array([$class, '_setApiRouter'], ['v'. $version, $submodule, $action, $module]);
+        call_user_func([$class, '_initialize']);
+        if (method_exists($class, $restAction)) {
+            return call_user_func_array([$class, $restAction], $params);
+        } elseif (method_exists($class, $action)) {
+            return call_user_func_array([$class, $action], $params);
         } else {
-            throw new MethodException();
+            return $this->error(404, '请求错误：暂不支持该接口');
         }
     }
-
 }
-
