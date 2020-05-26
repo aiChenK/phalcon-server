@@ -12,7 +12,8 @@
   ],
   "require": {
     "php": ">=7.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-phalcon": "3.4.*"
   },
   "autoload": {
     "psr-4": {

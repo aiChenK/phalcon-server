@@ -2,6 +2,7 @@
 > - 以phalcon框架作为服务代码模板，包含api模块及cli模块，controller仅作预留
 > - api模块接口有版本划分，支持restful
 > - cli模块用于命令行，可用于处理耗时任务，定时任务等
+> - 使用composer替代框架autoload
 
 ## 依赖
 - PHP 7.2+
@@ -11,6 +12,8 @@
 - 下载完成后需运行 `composer install`
 - 修改`web.ini`或`app/config/config.php`文件配置（web.ini中内容会覆盖后者）
 - 项目没有视图层，需设置services_web中view，设置config中cache路径并增加cache目录
+- api模块下需指定版本`v([0-9]+)`，支持版本下增加文件夹（表示module），路由为`/api/:version/[:module/]/:controller/:action`
+- api模块下action支持指定`method`，如`index->indexPost`，访问路径为`curl -X POST /api/v1/index/index`（`curl -X GET /api/v1/index/indexPost`也有效）
 
 ## 验证
 - 网页访问：`curl http://xxxx/api/v1/test`
